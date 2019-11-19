@@ -299,7 +299,7 @@ public class Images {
                 point.y += rect.y;
             }
             point.x = mScreenMetrics.scaleX((int) point.x);
-            point.y = mScreenMetrics.scaleX((int) point.y);
+            point.y = mScreenMetrics.scaleY((int) point.y);
         }
         if (src != image.getMat()) {
             OpenCVHelper.release(src);
@@ -326,7 +326,7 @@ public class Images {
                 point.y += rect.y;
             }
             point.x = mScreenMetrics.scaleX((int) point.x);
-            point.y = mScreenMetrics.scaleX((int) point.y);
+            point.y = mScreenMetrics.scaleY((int) point.y);
         }
         if (src != image.getMat()) {
             OpenCVHelper.release(src);
