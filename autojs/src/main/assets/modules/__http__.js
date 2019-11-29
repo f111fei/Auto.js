@@ -44,7 +44,11 @@ module.exports = function (runtime, scope) {
         if (!callback && ui.isUiThread() && continuation.enabled) {
             cont = continuation.create();
         }
-        var call = http.client().newCall(http.buildRequest(url, options));
+        var client = http.client();
+        if (!isNaN(options.timeout)) {
+            client.setTimeout(options.timeout);
+        }
+        var call = client.newCall(http.buildRequest(url, options));
         if (!callback && !cont) {
             return wrapResponse(call.execute());
         }
