@@ -165,6 +165,19 @@ module.exports = function (runtime, scope) {
             return ResultAdapter.wait(javaImages.requestScreenCapture(orientation));
         }
 
+        images.setScreenCapture = function (landscape) {
+            let ScreenCapturer = com.stardust.autojs.core.image.capture.ScreenCapturer;
+            var orientation = ScreenCapturer.ORIENTATION_AUTO;
+            if (landscape === true) {
+                orientation = ScreenCapturer.ORIENTATION_LANDSCAPE;
+            }
+            if (landscape === false) {
+                orientation = ScreenCapturer.ORIENTATION_PORTRAIT;
+            }
+            var setResult = javaImages.setScreenCapture(orientation);
+            return setResult;
+        }
+
         images.save = function (img, path, format, quality) {
             format = format || "png";
             quality = quality == undefined ? 100 : quality;
@@ -546,7 +559,7 @@ module.exports = function (runtime, scope) {
             javaImages.initOpenCvIfNeeded();
         }
 
-        scope.__asGlobal__(images, ['requestScreenCapture', 'captureScreen', 'findImage', 'findImageInRegion', 'findColor', 'findColorInRegion', 'findColorEquals', 'findMultiColors']);
+        scope.__asGlobal__(images, ['requestScreenCapture', 'setScreenCapture', 'captureScreen', 'findImage', 'findImageInRegion', 'findColor', 'findColorInRegion', 'findColorEquals', 'findMultiColors']);
 
         scope.colors = colors;
 

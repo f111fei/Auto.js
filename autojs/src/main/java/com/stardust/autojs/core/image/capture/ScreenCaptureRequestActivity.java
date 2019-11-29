@@ -11,6 +11,8 @@ import androidx.annotation.RequiresApi;
 import com.stardust.app.OnActivityResultDelegate;
 import com.stardust.util.IntentExtras;
 
+import static android.content.Intent.FLAG_ACTIVITY_NEW_TASK;
+
 /**
  * Created by Stardust on 2017/5/22.
  */
@@ -24,7 +26,7 @@ public class ScreenCaptureRequestActivity extends Activity {
 
     public static void request(Context context, ScreenCaptureRequester.Callback callback) {
         Intent intent = new Intent(context, ScreenCaptureRequestActivity.class)
-                .addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                .addFlags(FLAG_ACTIVITY_NEW_TASK);
         IntentExtras.newExtras()
                 .put("callback", callback)
                 .putInIntent(intent);

@@ -244,8 +244,11 @@ public class UiSelector extends UiGlobalSelector {
             addFilter(new Filter() {
                 @Override
                 public boolean filter(@NotNull UiObject node) {
-                    String fullId = mAccessibilityBridge.getInfoProvider().getLatestPackage() + ":id/" + id;
+                    //String fullId = mAccessibilityBridge.getInfoProvider().getLatestPackage() + ":id/" + id;
+                    String fullId = node.packageName() + ":id/" + id;
                     String curNodeResName = node.getViewIdResourceName();
+                    Log.i("UiSelector:id", "fullId:" + fullId + ", curNodeResName:" + curNodeResName);
+                    Log.i("UiSelector:id",  "cur node: "+ node);
                     if (curNodeResName != null && curNodeResName.contains(":id/")) {
                         return fullId.equals(node.getViewIdResourceName());
                     } else {

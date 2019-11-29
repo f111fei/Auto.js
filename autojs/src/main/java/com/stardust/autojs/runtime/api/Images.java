@@ -15,6 +15,7 @@ import android.os.Looper;
 import androidx.annotation.RequiresApi;
 
 import android.util.Base64;
+import android.util.Log;
 import android.view.Gravity;
 
 import com.stardust.autojs.annotation.ScriptVariable;
@@ -47,6 +48,8 @@ import java.util.Arrays;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
+import java.util.Timer;
+import java.util.TimerTask;
 
 /**
  * Created by Stardust on 2017/5/20.
@@ -72,6 +75,20 @@ public class Images {
         mContext = context;
         mScreenMetrics = mScriptRuntime.getScreenMetrics();
         colorFinder = new ColorFinder(mScreenMetrics);
+    }
+
+    @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
+    public boolean setScreenCapture(int orientation) {
+        if(mScreenCapturer == null) {
+            return false;
+        }
+        mScreenCapturer.setOrientation(orientation);
+        try {
+            Thread.sleep(500);
+        } catch (java.lang.InterruptedException e) {
+            Log.i("setScreenCapture", "sleep function interrepted");
+        }
+        return true;
     }
 
     @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
