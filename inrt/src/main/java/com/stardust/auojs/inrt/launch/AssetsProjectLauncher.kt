@@ -61,6 +61,18 @@ open class AssetsProjectLauncher(private val mAssetsProjectDir: String, private 
         }
     }
 
+    fun stopScript() {
+        if (mScriptExecution != null && mScriptExecution!!.engine != null &&
+                !mScriptExecution!!.engine.isDestroyed) {
+            try {
+                mScriptExecution!!.engine.forceStop();
+
+            }catch (e: Exception) {
+                AutoJs.instance.globalConsole.error(e)
+            }
+        }
+    }
+
     private fun runScript(activity: Activity?) {
         if (mScriptExecution != null && mScriptExecution!!.engine != null &&
                 !mScriptExecution!!.engine.isDestroyed) {
