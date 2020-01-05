@@ -113,6 +113,12 @@ dependencies {
         exclude group: 'com.android.support'
     })
     testImplementation 'junit:junit:4.12'
+    // OpenCv
+    api(name: 'opencv-3.4.3', ext: 'aar')
+    // Terminal emulator
+    api(name: 'libtermexec-release', ext: 'aar')
+    api(name: 'emulatorview-release', ext: 'aar')
+    api(name: 'term-debug', ext: 'aar')
     implementation project(':automator')
     implementation project(':common')
     implementation project(':autojs')
