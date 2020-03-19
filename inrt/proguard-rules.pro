@@ -23,7 +23,15 @@
 # If you keep the line number information, uncomment this to
 # hide the original source file name.
 #-renamesourcefileattribute SourceFile
-
 -dontwarn org.mozilla.javascript.**
 -dontwarn jackpal.androidterm.**
 -keep class org.mozilla.javascript.** { *; }
+-keep class androidx.core.app.CoreComponentFactory { *; }
+-keep class com.stardust.auojs.inrt { *; }
+-keep class org.mozilla.javascript.** { *; }
+-keep class com.jecelyin.editor.** { *; }
+-keep class com.stardust.automator.** { *; }
+-keep class com.stardust.autojs.** { *; }
+-keep class org.greenrobot.eventbus.** { *; }
+-keep class * extends c
+-keepattributes *Annotation*

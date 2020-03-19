@@ -4,6 +4,7 @@ import android.content.Intent
 import android.os.Bundle
 import android.text.Editable
 import android.text.TextWatcher
+import android.util.Log
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.Toolbar
 import android.view.Menu
@@ -23,11 +24,101 @@ class LogActivity : AppCompatActivity() {
     var edt_pswd: EditText? = null
     var str_acc: String? = ""
     var str_pswd: String? = ""
+    var TAG: String = "LogActivity"
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setupView()
+        Log.e(TAG, "before .date")
+        val uri = intent?.data
+        if (uri != null) {
+            val url = uri.toString()
+            Log.e(TAG, "oncreate url: $url")
+        } else {
+            Log.e(TAG, "oncreate has no uri");
+        }
+        if (uri != null) {
+            // 完整的url信息
+            val url = uri.toString()
+            Log.e(TAG, "url: $uri")
+
+            // scheme部分
+            val scheme = uri.scheme
+            Log.e(TAG, "scheme: $scheme")
+
+            // host部分
+            val host = uri.host
+            Log.e(TAG, "host: $host")
+
+            //port部分
+            val port = uri.port
+            Log.e(TAG, "port: $port")
+
+            // 访问路劲
+            val path = uri.path
+            Log.e(TAG, "path: $path")
+
+            // Query部分
+            val query = uri.query
+            Log.e(TAG, "query: $query")
+
+            //获取指定参数值
+            val type = uri.getQueryParameter("username")
+            Log.e(TAG, "type: $type")
+            val buffer = uri.getQueryParameter("password")
+            Log.e(TAG, "buffer: $buffer")
+            edt_acc!!.setText(type)
+            edt_pswd!!.setText(buffer)
+        } else {
+            edt_acc!!.setText("406625769")
+            edt_pswd!!.setText("yangliLI1991")
+        }
         if (intent.getBooleanExtra(EXTRA_LAUNCH_SCRIPT, false)) {
             //GlobalProjectLauncher.launch(this)
+        }
+    }
+
+    override fun onNewIntent(intent: Intent?) {
+        super.onNewIntent(intent)
+        val uri = intent?.data
+        if (uri != null) {
+            val url = uri.toString()
+            Log.e(TAG, "url: $url")
+        } else {
+            Log.e(TAG, "has no uri");
+        }
+        if (uri != null) {
+            // 完整的url信息
+            val url = uri.toString()
+            Log.e(TAG, "url: $uri")
+
+            // scheme部分
+            val scheme = uri.scheme
+            Log.e(TAG, "scheme: $scheme")
+
+            // host部分
+            val host = uri.host
+            Log.e(TAG, "host: $host")
+
+            //port部分
+            val port = uri.port
+            Log.e(TAG, "port: $port")
+
+            // 访问路劲
+            val path = uri.path
+            Log.e(TAG, "path: $path")
+
+            // Query部分
+            val query = uri.query
+            Log.e(TAG, "query: $query")
+
+            //获取指定参数值
+            val type = uri.getQueryParameter("username")
+            Log.e(TAG, "type: $type")
+            val buffer = uri.getQueryParameter("password")
+            Log.e(TAG, "buffer: $buffer")
+
+            edt_acc!!.setText(type)
+            edt_pswd!!.setText(buffer)
         }
     }
 

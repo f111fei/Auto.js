@@ -12,10 +12,14 @@
             <option value="$PROJECT_DIR$/autojs" />
             <option value="$PROJECT_DIR$/automator" />
             <option value="$PROJECT_DIR$/common" />
+            <option value="$PROJECT_DIR$/fastautolib" />
             <option value="$PROJECT_DIR$/inrt" />
+            <option value="$PROJECT_DIR$/mytestsrv" />
+            <option value="$PROJECT_DIR$/pureapp" />
           </set>
         </option>
         <option name="resolveModulePerSourceSet" value="false" />
+        <option name="testRunner" value="PLATFORM" />
       </GradleProjectSettings>
     </option>
   </component>

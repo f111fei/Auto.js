@@ -1,9 +1,12 @@
 package com.stardust.view.accessibility
 
+import android.content.Intent
+import android.content.ServiceConnection
 import android.os.Build
 import android.util.Log
 import android.view.KeyEvent
 import android.view.accessibility.AccessibilityEvent
+import android.view.accessibility.AccessibilityEvent.TYPE_TOUCH_INTERACTION_START
 import android.view.accessibility.AccessibilityNodeInfo
 import com.stardust.event.EventDispatcher
 
@@ -42,6 +45,7 @@ open class AccessibilityService : android.accessibilityservice.AccessibilityServ
     override fun onAccessibilityEvent(event: AccessibilityEvent) {
         instance = this
         // Log.v(TAG, "onAccessibilityEvent: $event");
+        Log.i("siranAccLog", "eventTypes:" + eventTypes.toString() + ", Access event: " + event.toString());
         if (!containsAllEventTypes && !eventTypes.contains(event.eventType))
             return
         val type = event.eventType
@@ -60,6 +64,14 @@ open class AccessibilityService : android.accessibilityservice.AccessibilityServ
             if (delegate.onAccessibilityEvent(this@AccessibilityService, event))
                 break
             //Log.v(TAG, "millis: " + (System.currentTimeMillis() - start) + " delegate: " + entry.getValue().getClass().getName());
+        }
+
+        if (event.eventType == AccessibilityEvent.TYPE_TOUCH_INTERACTION_START) {
+            Log.i(TAG,"TYPE_TOUCH_INTERACTION_START called.");
+        }
+
+        if (event.eventType == AccessibilityEvent.TYPE_TOUCH_INTERACTION_END) {
+            Log.i(TAG,"TYPE_TOUCH_INTERACTION_END called.");
         }
     }
 
@@ -103,7 +115,7 @@ open class AccessibilityService : android.accessibilityservice.AccessibilityServ
 
 
     override fun onServiceConnected() {
-        Log.v(TAG, "onServiceConnected: " + serviceInfo.toString())
+        Log.v("siranAccLog", "说明我已经被调用了，否则不可能打印这段话.onServiceConnected: " + serviceInfo.toString())
         instance = this
         super.onServiceConnected()
         LOCK.lock()
@@ -111,7 +123,6 @@ open class AccessibilityService : android.accessibilityservice.AccessibilityServ
         LOCK.unlock()
         // FIXME: 2017/2/12 有时在无障碍中开启服务后这里不会调用服务也不会运行，安卓的BUG???
     }
-
 
     fun fastRootInActiveWindow(): AccessibilityNodeInfo? {
         return mFastRootInActiveWindow

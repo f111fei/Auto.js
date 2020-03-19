@@ -15,6 +15,10 @@ import com.stardust.auojs.inrt.autojs.AutoJs
 import com.stardust.auojs.inrt.autojs.GlobalKeyObserver
 import com.stardust.autojs.core.ui.inflater.ImageLoader
 import com.stardust.autojs.core.ui.inflater.util.Drawables
+import androidx.core.content.ContextCompat.getSystemService
+import android.icu.lang.UCharacter.GraphemeClusterBreak.T
+import com.stardust.autojs.runtime.api.Images
+
 
 /**
  * Created by Stardust on 2017/7/1.
@@ -69,6 +73,11 @@ class App : Application() {
                         })
             }
         })
+    }
+
+    override fun onTerminate() {
+        Images.releaseStaticScreenCapture()
+        super.onTerminate()
     }
 
 }

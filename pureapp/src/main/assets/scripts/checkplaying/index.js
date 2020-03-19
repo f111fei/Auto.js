@@ -1,0 +1,1 @@
+toastLog("run index.js ok");

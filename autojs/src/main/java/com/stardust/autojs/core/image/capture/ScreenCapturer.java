@@ -66,6 +66,13 @@ public class ScreenCapturer {
         observeOrientation();
     }
 
+    public void setHandler(Handler handler) {
+        mHandler = handler;
+        mMediaProjection = mProjectionManager.getMediaProjection(Activity.RESULT_OK, (Intent) mData.clone());
+        mHandler = handler;
+        observeOrientation();
+    }
+
     private void observeOrientation() {
         mOrientationEventListener = new OrientationEventListener(mContext) {
             @Override

@@ -18,6 +18,7 @@ import android.util.Base64;
 import android.util.Log;
 import android.view.Gravity;
 
+import com.stardust.app.GlobalAppContext;
 import com.stardust.autojs.annotation.ScriptVariable;
 import com.stardust.autojs.core.image.ColorFinder;
 import com.stardust.autojs.core.image.ImageWrapper;
@@ -65,6 +66,7 @@ public class Images {
     private ImageWrapper mPreCaptureImage;
     private ScreenMetrics mScreenMetrics;
     private volatile boolean mOpenCvInitialized = false;
+    private static ScreenCapturer mStaticCapture = null;
 
     @ScriptVariable
     public final ColorFinder colorFinder;
@@ -92,6 +94,18 @@ public class Images {
     }
 
     @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
+    public boolean requestScreenCapByStatic(int orientation) {
+        Looper servantLooper = mScriptRuntime.loopers.getServantLooper();
+        if (mStaticCapture != null) {
+            mStaticCapture.setHandler(new Handler(servantLooper));
+            mScreenCapturer = mStaticCapture;
+            mScreenCapturer.setOrientation(orientation);
+            return true;
+        }
+        return false;
+    }
+
+    @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
     public ScriptPromiseAdapter requestScreenCapture(int orientation) {
         ScriptRuntime.requiresApi(21);
         ScriptPromiseAdapter promiseAdapter = new ScriptPromiseAdapter();
@@ -100,12 +114,29 @@ public class Images {
             promiseAdapter.resolve(true);
             return promiseAdapter;
         }
+
         Looper servantLooper = mScriptRuntime.loopers.getServantLooper();
+        /*if (mStaticCapture != null) {
+            mStaticCapture.setHandler(new Handler(servantLooper));
+            mScreenCapturer = mStaticCapture;
+            mScreenCapturer.setOrientation(orientation);
+            promiseAdapter.resolve(true);
+            return promiseAdapter;
+        }*/
+
         mScreenCaptureRequester.setOnActivityResultCallback((result, data) -> {
             if (result == Activity.RESULT_OK) {
+                if (mStaticCapture != null) {
+                    //mStaticCapture.setHandler(new Handler(servantLooper));
+                    mScreenCapturer = mStaticCapture;
+                    //mScreenCapturer.setOrientation(orientation);
+                    promiseAdapter.resolve(true);
+                } else {
                 mScreenCapturer = new ScreenCapturer(mContext, data, orientation, ScreenMetrics.getDeviceScreenDensity(),
                         new Handler(servantLooper));
+                mStaticCapture = mScreenCapturer;
                 promiseAdapter.resolve(true);
+                }
             } else {
                 promiseAdapter.resolve(false);
             }
@@ -282,7 +313,13 @@ public class Images {
 
     public void releaseScreenCapturer() {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP && mScreenCapturer != null) {
-            mScreenCapturer.release();
+            //mScreenCapturer.release();
+        }
+    }
+
+    public static void releaseStaticScreenCapture() {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP && mStaticCapture != null) {
+            mStaticCapture.release();
         }
     }
 

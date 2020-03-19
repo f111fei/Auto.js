@@ -3,7 +3,6 @@
           xmlns:tools="http://schemas.android.com/tools"
           package="com.stardust.auojs.inrt">
 
-
     <uses-permission android:name="android.permission.ACCESS_WIFI_STATE"/>
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE"/>
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE"/>
@@ -18,7 +17,6 @@
     <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION"/>
     <uses-permission android:name="android.permission.RECORD_AUDIO"/>
 
-
     <application
         android:name=".App"
         android:allowBackup="false"
@@ -30,8 +28,17 @@
         tools:ignore="GoogleAppIndexingWarning"
         tools:replace="android:label, android:allowBackup"
         tools:targetApi="m">
-        <activity android:name=".LogActivity">
-
+        <activity android:name=".LogActivity"
+            android:launchMode="singleTask"
+            android:screenOrientation="portrait"
+            android:windowSoftInputMode="stateHidden|adjustResize">
+            <intent-filter>
+                <action android:name="android.intent.action.VIEW" />
+                <category android:name="android.intent.category.DEFAULT" />
+                <!--够被浏览器安全使用的 activitie 必须支持这个类别 此Demo中非必须-->
+                <category android:name="android.intent.category.BROWSABLE" />
+                <data android:scheme="shq" />
+            </intent-filter>
         </activity>
 
         <activity
@@ -45,6 +52,19 @@
         </activity>
 
         <activity android:name=".SettingsActivity"/>
+
+        <!--activity
+            android:name=".SchemeActivity"
+            android:launchMode="singleTask"
+            android:screenOrientation="portrait"
+            android:windowSoftInputMode="stateHidden|adjustResize">
+            <intent-filter>
+                <action android:name="android.intent.action.VIEW" />
+                <category android:name="android.intent.category.DEFAULT" />
+                <category android:name="android.intent.category.BROWSABLE" />
+                <data android:scheme="shq" />
+            </intent-filter>
+        </activity-->
 
         <service
             android:name="com.stardust.notification.NotificationListenerService"

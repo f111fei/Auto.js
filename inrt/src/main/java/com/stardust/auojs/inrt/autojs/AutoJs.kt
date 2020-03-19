@@ -90,8 +90,8 @@ class AutoJs private constructor(application: Application) : com.stardust.autojs
 
     override fun createRuntime(): ScriptRuntime {
         val runtime = super.createRuntime()
-        runtime.putProperty("class.settings", SettingsActivity::class.java)
-        runtime.putProperty("class.console", LogActivity::class.java)
+        //runtime.putProperty("class.settings", SettingsActivity::class.java)
+        //runtime.putProperty("class.console", LogActivity::class.java)
         return runtime
     }
 
